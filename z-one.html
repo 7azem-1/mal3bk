@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.7" />
+  <title>Book a Field - MLAAB CITY</title>
+  <link rel="stylesheet" href="padel.css" />
+  <link rel="stylesheet" href="navbar-icon.css">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="announcement-bar" id="announcement">
+    <div class="announcement-content">
+       🎾Book your padel court in seconds, only here🎾 
+    </div>
+      </div>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding-top: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      width: 500px;
+      max-width: 95%;
+      margin: 150px auto 20px;
+      text-align: left;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .time-row {
+      display: flex;
+      gap: 10px;
+    }
+    .time-row select {
+      flex: 1;
+    }
+    button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    button:hover {
+      background-color: #27ae60;
+    }
+    .date-input {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 2px solid #000;
+      background: #fff;
+      font-size: 15px;
+      box-sizing: border-box;
+      appearance: none;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+    .modal {
+      background: #fff;
+      width: 420px;
+      max-width: 100%;
+      border-radius: 18px;
+      padding: 28px 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      text-align: center;
+      transform: scale(0.9);
+      opacity: 0;
+      transition: transform 300ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+    }
+    .modal.show {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .success-circle {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      position: relative;
+      background: linear-gradient(135deg,#2ecc71,#27ae60);
+      box-shadow: 0 8px 20px rgba(39,174,96,0.25);
+      animation: popIn 450ms cubic-bezier(.2,.9,.2,1);
+    }
+
+    .checkmark {
+      width: 56px;
+      height: 56px;
+    }
+    .checkmark circle {
+      fill: none;
+      stroke: rgba(255,255,255,0.22);
+      stroke-width: 6;
+    }
+    .checkmark .tick {
+      fill: none;
+      stroke: white;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 80;
+      stroke-dashoffset: 80;
+      animation: dash 600ms ease forwards 200ms;
+    }
+
+    @keyframes dash {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(.6); opacity: 0; }
+      70% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal h3 {
+      margin: 6px 0 6px;
+      font-size: 20px;
+    }
+    .modal p {
+      margin: 0 0 16px;
+      color: #555;
+    }
+    .modal .booking-code {
+      display: inline-block;
+      background: #f6f9f7;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px dashed #d6eadd;
+      margin-bottom: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .modal .ok-btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: #0d47a1;
+      color: white;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+    .modal .ok-btn:hover {
+      filter: brightness(.95);
+    }
+
+    @media (max-width: 520px) {
+      .date-input { padding: 9px 12px; font-size: 14px; }
+      .modal { padding: 20px; border-radius: 14px; }
+      .success-circle { width: 84px; height: 84px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-container">
+      <a href="home">
+        <img src="img/mal3bk-logo.png" alt="Mal3bk" class="logo" />
+      </a>
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li><a href="home">Home</a></li>
+        <li><a href="courts">Courts</a></li>
+        <li><a href="">Tournaments (locked)</a></li>
+        <li><div id="navbar-placeholder"></div></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="form-container">
+    <h2>Book Your court Now</h2>
+    <form id="bookingForm">
+      <div class="form-group">
+        <label for="date">Booking date</label>
+        <input type="date" id="date" placeholder="Booking date" required />
+      </div>
+      <div class="form-group">
+        <label>Select Time</label>
+        <div class="time-row">
+          <select id="from" required>
+            <option value="">From</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+            <option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option>
+            <option value="9">9</option><option value="10">10</option>
+            <option value="11">11</option><option value="12">12</option>
+          </select>
+          <select id="to" required>
+            <option value="">To</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+            <option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option>
+            <option value="9">9</option><option value="10">10</option>
+            <option value="11">11</option><option value="12">12</option>
+          </select>
+          <select id="am_pm" required>
+            <option value="">AM/PM</option>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit">Book Now</button>
+      <button type="button" onclick="window.location.href='cancel'" style="margin-top: 10px; background-color: #ff0000c0">
+        Cancel reservation
+      </button>
+      <button type="button" onclick="window.location.href='home'" style="margin-top: 10px; background-color: #0d47a1">
+        Back to Home
+      </button>
+    </form>
+  </div>
+
+<div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-hidden="true">
+  <div id="successModal" class="modal" role="document" aria-modal="true">
+    <div class="success-circle" aria-hidden="true">
+      <svg class="checkmark" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="20"></circle>
+        <path class="tick" fill="none" d="M14 27 l8 8 l16 -16"></path>
+      </svg>
+    </div>
+    <h3>Successful booking!</h3>
+    <p>Your booking was created successfully.</p>
+    <p>⚠ You must take a screenshot to enter the reservation ⚠</p>
+    <p>"You cannot cancel a booking less than 4 hours before it starts"</p>
+    <div id="bookingCode" class="booking-code">CODE</div>
+    <div id="orderCode" class="order-code">ORDER</div>
+    <br />
+    <button id="okBtn" class="ok-btn" type="button" disabled>OK</button>
+    <button id="screenshotBtn" class="ok-btn" type="button">📸 Screenshot</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const okBtn = document.getElementById("okBtn");
+const screenshotBtn = document.getElementById("screenshotBtn");
+
+screenshotBtn.addEventListener("click", () => {
+  const modal = document.getElementById("successModal");
+    html2canvas(modal).then(canvas => {
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = "booking_screenshot.png";
+      link.click();
+      okBtn.disabled = false;
+      okBtn.style.opacity = "1";
+    });
+  });
+
+okBtn.style.opacity = "0.5";
+
+</script>
+
+
+  <script>
+    (function () {
+      const input = document.getElementById("date");
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      input.min = `${yyyy}-${mm}-${dd}`;
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+
+<div id="conflictBackdrop" class="modal-backdrop" role="dialog" aria-hidden="true" style="display:none">
+  <div id="conflictModal" class="modal" role="document" aria-modal="true">
+    <div class="success-circle" style="background: linear-gradient(135deg,#e74c3c,#c0392b); box-shadow: 0 8px 20px rgba(192,57,43,0.2);">
+      <svg class="checkmark" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="20" stroke="rgba(255,255,255,0.18)" stroke-width="6" fill="none"></circle>
+        <path class="cross" fill="none" d="M16 16 L36 36 M36 16 L16 36" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="80" stroke-dashoffset="80"></path>
+      </svg>
+    </div>
+    <h3>Time slot already booked</h3>
+    <p>Sorry — that time overlaps with another booking. Please choose another slot.</p>
+    <button id="conflictOk" class="ok-btn" type="button">OK</button>
+  </div>
+</div>
+
+<div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-hidden="true" style="display:none">
+  <div id="successModal" class="modal" role="document" aria-modal="true">
+    <div class="success-circle">
+      <svg class="checkmark" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="20" stroke="rgba(255,255,255,0.18)" stroke-width="6" fill="none"></circle>
+        <path class="check" fill="none" d="M14 27 L22 35 L38 17" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </div>
+    <h3>Booking Confirmed</h3>
+    <p>Your booking code is <strong id="bookingCode"></strong></p>
+    <button id="okBtn" class="ok-btn" type="button">OK</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+  import { getFirestore, collection, doc, setDoc, runTransaction, serverTimestamp, query, where, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyChXYUhXG3GliFPb5vp736Hhp7Msllxj68",
+    authDomain: "mlaab-city.firebaseapp.com",
+    projectId: "mlaab-city",
+    storageBucket: "mlaab-city.appspot.com",
+    messagingSenderId: "910383180422",
+    appId: "1:910383180422:web:3feb8fad61d2cab5917f07",
+    measurementId: "G-YQ0016JLVH",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  getAnalytics(app);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  emailjs.init("TX8-siv12PBErzriy");
+
+  function generateCode(length = 6) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    return Array.from({ length }, () =>
+      chars[Math.floor(Math.random() * chars.length)]
+    ).join("");
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "register";
+    }
+  });
+
+  const bookingForm = document.getElementById("bookingForm");
+  const modalBackdrop = document.getElementById("modalBackdrop");
+  const successModal = document.getElementById("successModal");
+  const bookingCodeEl = document.getElementById("bookingCode");
+  const okBtn = document.getElementById("okBtn");
+
+  const conflictBackdrop = document.getElementById("conflictBackdrop");
+  const conflictModal = document.getElementById("conflictModal");
+  const conflictOk = document.getElementById("conflictOk");
+  const conflictCrossPath = conflictModal?.querySelector(".cross");
+
+  function animateCross() {
+    if (conflictCrossPath) {
+      conflictCrossPath.style.transition = "stroke-dashoffset 450ms ease 150ms";
+      conflictCrossPath.style.strokeDashoffset = "0";
+    }
+  }
+
+  function showModal(code, orderId) {
+    bookingCodeEl.textContent = code;
+    document.getElementById("orderCode").textContent = orderId;
+    modalBackdrop.style.display = "flex";
+    requestAnimationFrame(() => {
+      successModal.classList.add("show");
+      modalBackdrop.setAttribute("aria-hidden", "false");
+    });
+  }
+
+  function hideModal() {
+    successModal.classList.remove("show");
+    modalBackdrop.setAttribute("aria-hidden", "true");
+    setTimeout(() => {
+      modalBackdrop.style.display = "none";
+    }, 260);
+  }
+
+  function showConflictModal() {
+    conflictBackdrop.style.display = "flex";
+    requestAnimationFrame(() => {
+      conflictModal.classList.add("show");
+      conflictBackdrop.setAttribute("aria-hidden", "false");
+      if (conflictCrossPath) {
+        conflictCrossPath.style.strokeDashoffset = "80";
+      }
+      animateCross();
+    });
+  }
+
+  function hideConflictModal() {
+    conflictModal.classList.remove("show");
+    conflictBackdrop.setAttribute("aria-hidden", "true");
+    setTimeout(() => {
+      conflictBackdrop.style.display = "none";
+    }, 260);
+  }
+
+  okBtn.addEventListener("click", () => {
+    hideModal();
+    bookingForm.reset();
+  });
+
+  conflictOk.addEventListener("click", () => {
+    hideConflictModal();
+  });
+
+  modalBackdrop.addEventListener("click", (e) => {
+    if (e.target === modalBackdrop) hideModal();
+  });
+  conflictBackdrop.addEventListener("click", (e) => {
+    if (e.target === conflictBackdrop) hideConflictModal();
+  });
+
+  function resetTimeOptions() {
+    const selects = [document.getElementById("from"), document.getElementById("to")];
+    for (const s of selects) {
+      [...s.options].forEach(opt => {
+        if (!opt.value) return;
+        opt.disabled = false;
+        opt.style.color = "";
+        opt.style.textDecoration = "";
+      });
+    }
+  }
+
+  async function markBookedTimes() {
+    const date = document.getElementById("date").value;
+    const am_pm = document.getElementById("am_pm").value;
+
+    resetTimeOptions();
+    if (!date || !am_pm) return;
+
+    const bookingsRef = collection(db, "bookings");
+    const q = query(
+      bookingsRef,
+      where("date", "==", date),
+      where("am_pm", "==", am_pm),
+      where("expired", "==", false)
+    );
+    const snap = await getDocs(q);
+
+    const fromSelect = document.getElementById("from");
+    const toSelect = document.getElementById("to");
+
+    snap.forEach(doc => {
+      const d = doc.data();
+      const start = parseInt(d.from, 10);
+      const end = parseInt(d.to, 10);
+
+      for (let h = start + 1; h < end; h++) {
+        disableHour(fromSelect, h);
+        disableHour(toSelect, h);
+      }
+
+      disableHour(fromSelect, start);
+      disableHour(toSelect, end);
+    });
+  }
+
+  function disableHour(select, hour) {
+    [...select.options].forEach(opt => {
+      if (parseInt(opt.value, 10) === hour) {
+        opt.disabled = true;
+        opt.style.color = "red";
+        opt.style.textDecoration = "line-through";
+      }
+    });
+  }
+
+
+  document.getElementById("date").addEventListener("change", markBookedTimes);
+  document.getElementById("am_pm").addEventListener("change", markBookedTimes);
+
+  bookingForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const user = auth.currentUser;
+    if (!user) {
+      alert("You must be logged in to book.");
+      return;
+    }
+
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      alert("User profile not found.");
+      return;
+    }
+    const userData = userSnap.data();
+    const name = userData.name;
+    const email = userData.email;
+    const phone = userData.phone;
+
+    const date = document.getElementById("date").value;
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
+    const am_pm = document.getElementById("am_pm").value;
+    const code = generateCode();
+
+    if (!date || !from || !to || !am_pm) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const bookingsRef = collection(db, "bookings");
+      const q = query(
+        bookingsRef,
+        where("date", "==", date),
+        where("am_pm", "==", am_pm),
+        where("expired", "==", false)
+      );
+      const querySnapshot = await getDocs(q);
+
+      let conflict = false;
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        if (
+          parseInt(from) < parseInt(data.to) &&
+          parseInt(to) > parseInt(data.from)
+        ) {
+          conflict = true;
+        }
+      });
+
+      if (conflict) {
+        showConflictModal();
+        return;
+      }
+
+      const counterRef = doc(db, "counters", "bookings");
+      const orderId = await runTransaction(db, async (tx) => {
+        const snap = await tx.get(counterRef);
+        let next = 1;
+        if (!snap.exists()) {
+          tx.set(counterRef, { next: 2 });
+          next = 1;
+        } else {
+          next = snap.data().next;
+          tx.update(counterRef, { next: next + 1 });
+        }
+        const docId = `Order #${next}`;
+        tx.set(doc(bookingsRef, docId), {
+          name,
+          email,
+          phone,
+          date,
+          from,
+          to,
+          am_pm,
+          code,
+          full: `${from} - ${to} ${am_pm} ${date}`,
+          expired: false,
+          createdAt: serverTimestamp(),
+        });
+        return docId;
+      });
+
+      showModal(code, orderId);
+
+      try {
+        emailjs.send("service_d75wk4a", "template_fo5wwpn", {
+          to_name: name,
+          to_email: email,
+          phone: phone,
+          booking_date: date,
+          booking_from: from + " " + am_pm,
+          booking_to: to + " " + am_pm,
+          booking_code: code,
+          order_id: orderId
+        });
+      } catch (emailErr) {
+        console.warn("EmailJS send failed:", emailErr);
+      }
+
+    } catch (err) {
+      console.error("Error during booking:", err);
+      alert("Something went wrong. Please try again.");
+    }
+  });
+</script>
+
+<script>
+  const fromSelect = document.getElementById("from");
+  const toSelect = document.getElementById("to");
+  const ampmSelect = document.getElementById("am_pm");
+
+  if (fromSelect && toSelect && ampmSelect) {
+    fromSelect.disabled = true;
+    toSelect.disabled = true;
+
+    ampmSelect.addEventListener("change", () => {
+      if (ampmSelect.value) {
+        fromSelect.disabled = false;
+        toSelect.disabled = false;
+      } else {
+        fromSelect.disabled = true;
+        toSelect.disabled = true;
+        fromSelect.value = "";
+        toSelect.value = "";
+      }
+    });
+  }
+</script>
+
+<script>
+  fetch("navbar-icon.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar-placeholder").innerHTML = data;
+      import("./navbar-icon.js");
+    });
+</script>
+</body>
+</html>

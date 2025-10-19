@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="eg">
+    <head>
+   <meta charset="UTF-8">
+   <title>Mal3bk</title>
+   <meta name="description" content="Free Web tutorials">
+   <meta name="keywords" content="padel , football">
+   <meta name="author" content="talal ahmed">
+   <meta name="viewport" content="width=device-width, initial-scale=0.7">
+   <link rel="stylesheet" href="padel.css">
+   <link rel="stylesheet" href="navbar-icon.css">
+   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    </head>
+    <body>
+        <div class="announcement-bar" id="announcement">
+    <div class="announcement-content">
+      🎾Book your padel court in seconds, only here 🎾
+    </div>
+        </div>
+          <header class="site-header">
+    <div class="logo-container">
+    <a href="home"> <img src="img/mal3bk-logo.png" alt="Mal3bk" class="logo" /></a>
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li><a href="home">Home</a></li>
+        <li><a href="courts">Courts</a></li>
+        <li><a href="#">Tournaments (locked)</a></li>
+        <li><div id="navbar-placeholder"></div></li>
+      </ul>
+    </nav>
+  </header> <section class="project" id="project">
+        <h2 class="title">padel courts</h2>
+        <div class="content">
+            <div class="project-card">
+                <div class="project-image">
+                   <a href="z-one"> <img src="img/project1.jpg" /></a>
+                </div>
+                <div class="project-info">
+                    <p class="project-category"></p>
+                    <strong class="project-title">
+                        <a href="z-one" class="more-details">Z.One padel</a>
+                    </strong>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                   <a href=""> <img src="img/mal3bk book2.jpg" /></a>
+                </div>
+                <div class="project-info">
+                    <p class="project-category"></p>
+                    <strong class="project-title">
+                        <a href="" class="more-details">Mal3bk</a>
+                    </strong>
+                </div>
+            </div>
+             <div class="project-card">
+                <div class="project-image">
+                   <a href=""> <img src="img/mal3bk book2.jpg" /></a>
+                </div>
+                <div class="project-info">
+                    <p class="project-category"></p>
+                    <strong class="project-title">
+                        <a href="" class="more-details">Mal3bk</a>
+                    </strong>
+                </div>
+            </div>
+            </section>
+            <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyChXYUhXG3GliFPb5vp736Hhp7Msllxj68",
+                authDomain: "mlaab-city.firebaseapp.com",
+                projectId: "mlaab-city",
+                storageBucket: "mlaab-city.appspot.com",
+                messagingSenderId: "910383180422",
+                appId: "1:910383180422:web:3feb8fad61d2cab5917f07",
+                measurementId: "G-YQ0016JLVH"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                window.location.href = "register";
+                }
+            });
+            </script>
+            <script>
+        fetch("navbar-icon.html")
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById("navbar-placeholder").innerHTML = data;
+            import("./navbar-icon.js");
+            });
+        </script>
+    </body>
+</html>

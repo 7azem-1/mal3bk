@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="eg">
+    <head>
+   <meta charset="UTF-8">
+   <title>Mal3bk</title>
+   <meta name="description" content="Free Web tutorials">
+   <meta name="keywords" content="padel , football">
+   <meta name="author" content="talal ahmed">
+   <meta name="viewport" content="width=device-width, initial-scale=0.7">
+   <link rel="stylesheet" href="padel.css">
+   <link rel="stylesheet" href="navbar-icon.css">
+   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    </head>
+    <body>
+      <div class="announcement-bar" id="announcement">
+    <div class="announcement-content">
+       🎾Book your padel court in seconds, only here 🎾
+    </div>
+       </div>
+          <header class="site-header">
+            <div class="logo-container">
+    <a href="home"> <img src="img/mal3bk-logo.png" alt="Mal3bk" class="logo" /></a>
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li><a href="home">Home</a></li>
+        <li><a href="courts">Courts</a></li>
+        <li><a href="tournaments">Tournaments</a></li>
+        <li><div id="navbar-placeholder"></div></li>
+      </ul>
+    </nav>
+          </header>
+    </body>
+  <main class="tournaments">
+    <div class="tournament-card">
+      <h2>Spring Smash Open</h2>
+      <p><strong>Date:</strong> April 5–7, 2025</p>
+      <p><strong>Location:</strong> assuit city</p>
+      <a href="#">Register</a>
+    </div>
+
+    <div class="tournament-card">
+      <h2>Summer Padel Cup</h2>
+      <p><strong>Date:</strong> July 12–14, 2025</p>
+      <p><strong>Location:</strong> assuit city</p>
+      <a href="#">Register</a>
+    </div>
+
+    <div class="tournament-card">
+      <img src="img/WhatsApp Image 2025-07-20 at 03.00.19_8c997f94.jpg">
+         <h2>Autumn Doubles Clash</h2>
+      <p><strong>Date:</strong> October 3–5, 2025</p>
+      <p><strong>Location:</strong> assuit city</p>
+      <a href="#">Register</a>
+    </div>
+  </main>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyChXYUhXG3GliFPb5vp736Hhp7Msllxj68",
+    authDomain: "mlaab-city.firebaseapp.com",
+    projectId: "mlaab-city",
+    storageBucket: "mlaab-city.appspot.com",
+    messagingSenderId: "910383180422",
+    appId: "1:910383180422:web:3feb8fad61d2cab5917f07",
+    measurementId: "G-YQ0016JLVH"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "register";
+    }
+  });
+</script>
+
+<script>
+  fetch("navbar-icon.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar-placeholder").innerHTML = data;
+      import("./navbar-icon.js");
+    });
+</script>
+
+</html>
+
+    
